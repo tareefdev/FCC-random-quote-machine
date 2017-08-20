@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Random Quote Machine</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <script src="https://use.fontawesome.com/188fa357f8.js"></script>
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $(document).ready(function() {
+
+      $('#get-another-quote-button').on('click', function(e) {
+        var coloro = "#"+((1<<24)*Math.random()|0).toString(16);
+       $.getJSON("https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&callback=", function(data) {
+         var post = data.shift();
+         $('#quote-title').text(post.title);
+         $('#quote-content').html( post.content);
+         $('body').css("background-color", coloro);
+         $('button').css("background-color", coloro);
+         $('.blockquote').css("border-left-color", coloro);
+         $('.fa-twitter').css("color", coloro);
+         var quoteAsString = post.content.replace(/<\/?[^>]+>/gi, '');
+          var newurl = "https://twitter.com/intent/tweet?text=" + quoteAsString + "." + post.title;
+      $("a").attr("href", newurl);
+      });
+        });
+       });
+       $.ajaxSetup({ cache: false });
+    </script>
+
+    <style media="screen">
+    .myQuote {
+margin-top: 150px;
+width: 700px;
+margin-right: auto;
+margin-left: auto;
+background-color: #fff;
+padding: 20px;
+border-radius: 9px;
+}
+body {
+background-color: #40ab98;
+}
+#get-another-quote-button {
+background-color: #959595;
+color: #fff;
+}
+a {
+margin-top: 9px;
+display: block;
+}
+.buttons {
+margin-top: 10px;
+
+}
+#quote-content {
+font-size: 20px;
+}
+.fa-twitter {
+color: #000;
+}
+    </style>
+
+  </head>
+  <body>
+<div class="myQuote text-center">
+
+<p id="quote-content" class="blockquote">Hanin is the best woman in the World!</p>
+<h4 id="quote-title">My Quote Machine</h4>
+
+<div class="buttons">
+
+<button id="get-another-quote-button">New Quote</button>
+
+ <a class="twitter-share-button"
+href="https://twitter.com/intent/tweet?text=Hello%20world" target="_blank"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a>
+</div>
+
+</div>
+  </body>
+</html>
